@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+    <head th:replace="fragments/navbar.html :: header( title = 'Empleados')"></head>
+    <body>
+        <div class="container">
+            <nav th:replace="fragments/navbar.html :: navbar( active = 'Employee')"></nav>
+            <h2>Editar Empleado</h2>
+            <hr/>
+            <form th:action="@{'/employee/save'}" method="post">
+                <input th:value="${employee.id}" name="id" type="hidden"/>
+                <div class="form-group">
+                    <label for="firstname">Nombre</label>
+                    <input type="text" class="form-control" name="firstname" id="firstname" th:value="${employee.firstname}"/>
+                </div>
+                <div class="form-group">
+                    <label for="lastname">Apellido</label>
+                    <input type="text" class="form-control" name="lastname" id="lastname" th:value="${employee.lastname}"/>
+                </div>
+                <div class="form-group">
+                    <label for="title">Título</label>
+                    <input type="text" class="form-control" name="title" id="title" th:value="${employee.title}"/>
+                </div>
+                <div class="form-group">
+                    <label for="titleofcourtesy">Título de cortesía</label>
+                    <input type="text" class="form-control" name="titleofcourtesy" placeholder="Mr. Ms. Dr. etc"
+                           id="titleofcourtesy" th:value="${employee.titleofcourtesy}"/>
+                </div>
+                <div class="form-group">
+                    <label for="birthdate">Fecha de nacimiento</label>
+                    <input type="text" class="form-control" name="birthdateStr" placeholder="dd-MM-yyyy" id="birthdate" th:value="${#dates.format(employee.birthdate, 'dd-MM-yyyy')}"/>
+                </div>
+                <div class="form-group">
+                    <label for="hiredate">Fecha de ingreso</label>
+                    <input type="text" class="form-control" name="hiredateStr" placeholder="dd-MM-yyyy" id="hiredate" th:value="${#dates.format(employee.hiredate, 'dd-MM-yyyy')}" />
+                </div>
+                <div class="form-group">
+                    <label for="address">Dirección</label>
+                    <input type="text" class="form-control" name="address" id="address" th:value="${employee.address}"/>
+                </div>
+                <div class="form-group">
+                    <label for="city">Ciudad</label>
+                    <input type="text" class="form-control" name="city" id="city" th:value="${employee.city}"/>
+                </div>
+                <div class="form-group">
+                    <label for="region">Región</label>
+                    <input type="text" class="form-control" name="region" id="region" th:value="${employee.region}"/>
+                </div>
+                <div class="form-group">
+                    <label for="postalcode">Código postal</label>
+                    <input type="text" class="form-control" name="postalcode" id="postalcode" th:value="${employee.postalcode}"/>
+                </div>
+                <div class="form-group">
+                    <label for="country">Pais</label>
+                    <input type="text" class="form-control" name="country" id="country" th:value="${employee.country}"/>
+                </div>
+                <div class="form-group">
+                    <label for="homephone">Teléfono</label>
+                    <input type="text" class="form-control" name="homephone" id="homephone" th:value="${employee.homephone}"/>
+                </div>
+                <div class="form-group">
+                    <label for="extension">Anexo</label>
+                    <input type="text" class="form-control" name="extension" id="extension" th:value="${employee.extension}"/>
+                </div>
+                <div class="form-group">
+                    <label for="notes">Notas</label>
+                    <input type="text" class="form-control" name="notes" id="notes" th:value="${employee.notes}" requiered/>
+                </div>
+                <div class="form-group">
+                    <label for="salary">Salario</label>
+                    <input type="number" class="form-control" name="salary" id="salary" th:value="${employee.salary}"/>
+                </div>
+                <div class="form-group">
+                    <label for="manager">Jefe</label>
+                    <select class="form-control" name="manager" id="manager">
+                        <option th:each="jefe : ${listaJefes}" th:selected="${employee.manager != null and (jefe.id == employee.manager.id)}" th:text="|${jefe.firstname} ${jefe.lastname==null?'':jefe.lastname}|" th:value="${jefe.id}"></option>
+                    </select>
+                </div>
+                <a th:href="@{'/employee'}" class="btn btn-danger">Cancelar</a>
+                <button type="submit" class="btn btn-primary">Actualizar</button>
+            </form>
+        </div>
+    </body>
+</html>
